@@ -27,7 +27,7 @@ export default defineStore('auth', () => {
 		try {
 			const { data } = await axios.post<LoginResponse>('/auth/login', { method: 'POST', data: credential })
 			axios.defaults.headers.common['Authorization'] = data.token
-			useUserStore().me()
+			await useUserStore().me()
 			isAuth.value = true
 			isLoading.value = false
 		} catch(e) {
