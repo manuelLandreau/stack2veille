@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import useUserStore from '@/stores/user'
@@ -12,40 +12,49 @@ type Credential = {
 }
 
 type LoginResponse = {
-    token: string
+    token: string,
+    error?: string
 }
 
 export default defineStore('auth', () => {
 
-	const isAuth = ref(false)
-	const isLoading = ref(false)
-	const error = ref(null)
+    const isAuth = ref(false)
+    const isLoading = ref(false)
+    const error = ref(null)
 
-	async function login(credential: Credential) {
-		isLoading.value = true
+    const setAuth = computed((value: boolean) => isAuth.value = value)
 
-		try {
-			const { data } = await axios.post<LoginResponse>('/auth/login', { method: 'POST', data: credential })
-			axios.defaults.headers.common['Authorization'] = data.token
-			await useUserStore().me()
-			isAuth.value = true
-			isLoading.value = false
-		} catch(e) {
-			error.value = e
-		}
-	}
+    async function login(credential: Credential) {
+        isLoading.value = true
+        error.value = null
 
-	async function logout() {
-		axios.defaults.headers.common['Authorization'] = null
-		useUserStore().reset()
-		isAuth.value = false
-	}
+        try {
+            const { data } = await axios.post<LoginResponse>('/auth/login', { method: 'POST', data: credential })
+            if (data.token) {
+                axios.defaults.headers.common['Authorization'] = data.token
+                localStorage.setItem('jwt', data.token)
+                await useUserStore().me()
+                isAuth.value = true
+            } else if (data.error) error.value = data.error
+        } catch (e) {
+            error.value = e
+        }
+        isLoading.value = false
+    }
 
-	return {
-		login,
-		logout,
-		isAuth,
-		isLoading,
-		error
-	}
+    async function logout() {
+        axios.defaults.headers.common['Authorization'] = null
+        localStorage.removeItem('jwt')
+        useUserStore().reset()
+        isAuth.value = false
+    }
+
+    return {
+        login,
+        logout,
+        isAuth,
+        setAuth,
+        isLoading,
+        error
+    }
 })

@@ -1,5 +1,6 @@
 import { AuthController } from './controller/AuthController';
 import { UserController } from './controller/UserController';
+import JwtMiddleware from "./middlewares/jwtMiddleware";
 
 export const Routes = [{
     method: 'post',
@@ -9,6 +10,7 @@ export const Routes = [{
 }, {
     method: 'get',
     route: '/user/me',
+    middleware: JwtMiddleware,
     controller: UserController,
     action: 'me'
 }];

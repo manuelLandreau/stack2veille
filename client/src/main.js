@@ -11,11 +11,11 @@ axios.defaults.baseURL = 'http://localhost:3001'
 const app = createApp(App)
 
 const router = createRouter({
-	history: createWebHistory(),
-	routes,
+    history: createWebHistory(),
+    routes,
 })
 
 app
-	.use(router)
-	.use(createPinia())
-	.mount('#app')
+    .use(router)
+    .use(createPinia())
+    .mount('#app')

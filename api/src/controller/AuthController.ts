@@ -1,14 +1,31 @@
 import { Request, Response} from 'express';
-// import { getRepository } from 'typeorm';
-// import { User } from '../entity/User';
+import { getRepository } from 'typeorm';
+import { User } from '../entity/User';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 export class AuthController {
 
-    // private userRepository = getRepository(User);
+    private userRepository = getRepository(User);
 
-    login(request: Request, response: Response) {
-        return new Promise(resolve => {
-            setTimeout(() => resolve('token__'), 1000)
-        });
+    async login(req: Request, res: Response, next: Function) {
+        const { email, password } = req.body.data
+
+        const user = await this.userRepository
+            .createQueryBuilder('user')
+            .where('user.email = :email', { email })
+            .getOne();
+
+        if (!!user) {
+            try {
+                if (await bcrypt.compare(password, user.password)) {
+                    res.status = 200
+                    res.json({ token: await jwt.sign(user.email, process.env.SECRET) });
+                }
+            } catch (e) { res.json({ error: e.message }) }
+        } else {
+            res.status = 401
+            res.json({ error: 'Email not found' });
+        }
     }
 }
