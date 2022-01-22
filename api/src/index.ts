@@ -1,19 +1,22 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import { Routes } from './routes';
-import { User } from './entity/User';
+import express from 'express';
+import bodyParser from 'body-parser';
+import { routes } from './routes';
 import 'dotenv/config'
-const bcrypt = require('bcrypt');
 
-createConnection().then(async connection => {
+// import { User } from './entity/User';
+// const bcrypt = require('bcrypt');
+
+createConnection()
+    .then(async connection => {
+
     // create express app
     const app = express();
     app.use(bodyParser.json());
 
     // register express routes from defined application routes
-    Routes.forEach(route => {
+    routes.forEach(route => {
         (app as any)[route.method](
             route.route,
             route.middleware ? route.middleware : (_, __, next) => { next() },
@@ -29,9 +32,10 @@ createConnection().then(async connection => {
     // await connection.manager.save(connection.manager.create(User, {
     //     username: 'test',
     //     email: 'test@test.com',
-    //     password: bcrypt.hashSync('test', 10)
+    //     password: bcrypt.hashSync('test', 10),
+    //     optin: true
     // }));
 
-    console.log(`Express server has started on port ${process.env.PORT}. Open http://localhost:${process.env.PORT} to see results`);
+    console.log(`Express server has started on port ${process.env.PORT}.`);
 
-}).catch(error => console.log(error));
+}).catch(console.log);

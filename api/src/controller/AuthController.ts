@@ -1,8 +1,8 @@
 import { Request, Response} from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../entity/User';
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 export class AuthController {
 

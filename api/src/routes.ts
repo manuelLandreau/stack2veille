@@ -2,7 +2,7 @@ import { AuthController } from './controller/AuthController';
 import { UserController } from './controller/UserController';
 import JwtMiddleware from "./middlewares/jwtMiddleware";
 
-export const Routes = [{
+export const routes = [{
     method: 'post',
     route: '/auth/login',
     controller: AuthController,
