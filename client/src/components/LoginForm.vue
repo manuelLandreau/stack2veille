@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <button @click="submit" class="button">Login<span v-if="isLoading">...</span></button>
+                    <button @click="submit" class="button">Submit<span v-if="isLoading">...</span></button>
 
                     <div class="block dark:text-white" v-if="error">{{ error }}</div>
                 </div>

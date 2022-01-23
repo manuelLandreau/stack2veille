@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { routes } from './routes';
 import 'dotenv/config'
 
@@ -14,6 +15,7 @@ createConnection()
     // create express app
     const app = express();
     app.use(bodyParser.json());
+    app.use(cors());
 
     // register express routes from defined application routes
     routes.forEach(route => {

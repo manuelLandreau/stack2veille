@@ -6,7 +6,7 @@
                     <router-link to="/" class="text-3xl font-bold leading-tight text-teal-700">
                         Starter
                     </router-link>
-                    <button v-if="!isAuth" @click="toggleModal(true)" class="button">Login</button>
+                    <button v-if="!isAuth" @click="toggleModal(true)" class="button">Sign in</button>
                     <Menu as="div" v-else class="relative inline-block text-left">
                         <div>
                             <MenuButton

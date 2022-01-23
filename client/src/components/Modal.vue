@@ -32,7 +32,7 @@
                         >
                             <div class="px-12 py-6">
                                 <DialogTitle as="h2" class="text-2xl font-bold leading-tight text-gray-900 dark:text-white">
-                                    Login
+                                    {{ title }}
                                 </DialogTitle>
                                 <slot />
                             </div>
@@ -53,5 +53,5 @@ import {
     DialogTitle
 } from '@headlessui/vue';
 
-const { isOpen } = defineProps({ isOpen: Boolean })
+const { title, isOpen } = defineProps({ title: String, isOpen: Boolean })
 </script>
