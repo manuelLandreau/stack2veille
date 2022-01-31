@@ -5,10 +5,12 @@
     "dev": "vite --host",
     "build": "vite build",
     "serve": "vite preview",
-    "vitest": "vitest --config ./vitest.config.ts",
-    "cypress": "cypress run"
+    "test": "vitest",
+    "coverage": "vitest --coverage",
+    "e2e": "cypress run"
   },
   "dependencies": {
+    "@pinia/testing": "^0.0.9",
     "@vueuse/core": "^7.5.3",
     "@vueuse/integrations": "^7.5.3",
     "axios": "^0.24.0",
@@ -30,6 +32,7 @@
     "@vitejs/plugin-vue": "^2.1.0",
     "@vue/test-utils": "^2.0.0-rc.18",
     "autoprefixer": "^10.4.2",
+    "c8": "^7.11.0",
     "cypress": "^9.3.1",
     "eslint": "^8.7.0",
     "eslint-plugin-vue": "^8.3.0",

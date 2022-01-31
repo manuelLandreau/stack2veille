@@ -1,4 +1,4 @@
-import { Request, Response} from 'express';
+import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import { User } from '../entity/User';
 import jwt from 'jsonwebtoken';
@@ -8,7 +8,7 @@ export class AuthController {
 
     private userRepository = getRepository(User);
 
-    async login(req: Request, res: Response, next: Function) {
+    async login(req: Request, res: Response) {
         const { email, password } = req.body.data
 
         const user = await this.userRepository

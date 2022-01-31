@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class User {
@@ -17,5 +17,4 @@ export class User {
 
     @Column({ nullable: true })
     optin: boolean;
-
 }

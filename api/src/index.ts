@@ -13,7 +13,7 @@ createConnection()
     .then(async connection => {
 
     // create express app
-    const app = express();
+    const app: express.Application = express();
     app.use(bodyParser.json());
     app.use(cors());
 

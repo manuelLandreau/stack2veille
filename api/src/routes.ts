@@ -1,8 +1,13 @@
 import { AuthController } from './controller/AuthController';
 import { UserController } from './controller/UserController';
-import JwtMiddleware from "./middlewares/jwtMiddleware";
+import JwtMiddleware from './middlewares/jwtMiddleware';
+import { Express } from 'express';
 
-export const routes = [{
+type HTTPMethod = 'get'|'post'|'update'|'patch'|'delete'
+
+type Route = { method: HTTPMethod, route: string, middleware?: Express.RequestHandler, controller: object, action: string }
+
+export const routes: Route[] = [{
     method: 'post',
     route: '/auth/login',
     controller: AuthController,

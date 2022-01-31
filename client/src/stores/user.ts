@@ -1,14 +1,8 @@
-// @ts-ignore
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-type User = {
-    username: string,
-    email: string,
-    password?: string,
-    optin: boolean
-}
+type User = { username: string, email: string, password?: string, optin?: boolean }
 
 export default defineStore('user', () => {
 
@@ -18,20 +12,20 @@ export default defineStore('user', () => {
         password: '',
         optin: false
     })
-    const isLoading = ref(false)
-    const error = ref(null)
+    let isLoading = $ref(false)
+    let error = $ref(null)
 
     async function me() {
-        isLoading.value = true
+        isLoading = true
 
         try {
             const { data } = await axios.get<User>('/user/me', { method: 'GET' })
             user.username = data.username
             user.email = data.email
             user.optin = data.optin
-            isLoading.value = false
+            isLoading = false
         } catch (e) {
-            error.value = e
+            error = e
         }
     }
 
@@ -45,7 +39,7 @@ export default defineStore('user', () => {
         me,
         reset,
         user,
-        isLoading,
-        error
+        isLoading: $$(isLoading),
+        error: $$(error)
     }
 })

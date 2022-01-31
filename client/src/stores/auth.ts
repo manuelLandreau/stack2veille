@@ -1,32 +1,18 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axios  from 'axios'
 import useUserStore from '@/stores/user'
 
-type Credential = {
-    email: string,
-    password: string,
-    optin: boolean
-}
-
-type LoginResponse = {
-    token: string,
-    error?: string
-}
+type Credential = { email: string, password: string, optin?: boolean }
+type LoginResponse = { token?: string, error?: string }
 
 export default defineStore('auth', () => {
-
-    const isAuth = ref(false)
-    const isLoading = ref(false)
-    const error = ref(null)
-
-    const setAuth = computed((value: boolean) => isAuth.value = value)
+    let isAuth = $ref(false)
+    let isLoading = $ref(false)
+    let error = $ref(null)
 
     async function login(credential: Credential) {
-        isLoading.value = true
-        error.value = null
+        isLoading = true
+        error = null
 
         try {
             const { data } = await axios.post<LoginResponse>('/auth/login', { method: 'POST', data: credential })
@@ -34,27 +20,26 @@ export default defineStore('auth', () => {
                 axios.defaults.headers.common['Authorization'] = data.token
                 localStorage.setItem('jwt', data.token)
                 await useUserStore().me()
-                isAuth.value = true
-            } else if (data.error) error.value = data.error
+                isAuth = true
+            } else if (data.error) error = data.error
         } catch (e) {
-            error.value = e
+            error = e
         }
-        isLoading.value = false
+        isLoading = false
     }
 
     async function logout() {
         axios.defaults.headers.common['Authorization'] = null
         localStorage.removeItem('jwt')
         useUserStore().reset()
-        isAuth.value = false
+        isAuth = false
     }
 
     return {
         login,
         logout,
-        isAuth,
-        setAuth,
-        isLoading,
-        error
+        isAuth: $$(isAuth),
+        isLoading: $$(isLoading),
+        error: $$(error)
     }
 })

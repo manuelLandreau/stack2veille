@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main style="animation: fadeIn ease 0.2s;">
         <router-view />
     </main>
 </template>

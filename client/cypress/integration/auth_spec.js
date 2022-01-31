@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe('The Home Page', () => {
     it('successfully loads', () => {
         cy.visit('http://localhost:3000')
@@ -5,7 +6,7 @@ describe('The Home Page', () => {
         cy.contains('Login')
 
         cy.get('input[type="email"]')
-            .type('manu@test.com')
+            .type('test@test.com')
         cy.get('input[type="password"]')
             .type('test')
 
@@ -17,8 +18,9 @@ describe('The Home Page', () => {
         cy.wait('@login')
             .then(({_, response}) => {
                 expect(response.statusCode).equal(200)
+                expect(response.body).to.have.property('token')
                 cy.wait('@me').then(() => {
-                    cy.contains('Manu')
+                    cy.contains('test') // username
                 })
             })
     })
