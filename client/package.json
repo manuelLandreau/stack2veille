@@ -10,6 +10,7 @@
     "e2e": "cypress run"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^2.3.4",
     "@pinia/testing": "^0.0.9",
     "@vueuse/core": "^7.5.3",
     "@vueuse/integrations": "^7.5.3",

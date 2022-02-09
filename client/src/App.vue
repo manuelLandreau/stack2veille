@@ -2,24 +2,24 @@
     <main style="animation: fadeIn ease 0.2s;">
         <router-view />
     </main>
+    <notifications position="bottom right" />
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useDark } from '@vueuse/core';
 import useAuthStore from '@/stores/auth'
-import useUserStore from '@/stores/user'
-import axios from "axios";
+import { toRefs } from 'vue';
+const { refresh } = useAuthStore()
+const { error } = toRefs(useAuthStore())
+import { notify } from '@kyvg/vue3-notification'
 
-const isDark = useDark()
-isDark.value = localStorage.getItem('vueuse-color-scheme') === 'dark'
-
-const { isAuth } = storeToRefs(useAuthStore())
-const { me } = useUserStore()
-
-if (!!localStorage.getItem('jwt')) {
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('jwt')
-    isAuth.value = !!localStorage.getItem('jwt')
-    me()
+async function init() {
+    await refresh().catch(error => {
+        notify({
+            text: error.message,
+            type: 'error',
+            duration: 2000,
+        })
+    })
 }
+init()
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="py-4">
-        <div class="grid grid-cols-1 gap-6">
+        <form @submit.prevent="submit" class="grid grid-cols-1 gap-6">
             <label class="block">
                 <span class="text-gray-700 dark:text-gray-200">Email</span>
                 <input v-model="form.email" type="email" class="mt-1 block w-full" placeholder="Email" />
@@ -30,11 +30,11 @@
                 </div>
             </div>
 
-            <button v-if="!isLoading" @click="submit" class="button">Submit</button>
+            <button v-if="!isLoading" type="submit" class="button">Submit</button>
             <Spinner v-else class="mx-auto" />
 
             <div class="block dark:text-white" v-if="error">{{ error }}</div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -50,6 +50,7 @@ const form = reactive({
     password: '',
     optin: false
 })
+
 const { login } = useAuthStore()
 const { isLoading, error } = storeToRefs(useAuthStore())
 

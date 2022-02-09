@@ -13,6 +13,17 @@ export const routes: Route[] = [{
     controller: AuthController,
     action: 'login'
 }, {
+    method: 'post',
+    route: '/auth/register',
+    controller: AuthController,
+    action: 'register'
+}, {
+    method: 'get',
+    route: '/auth/refresh',
+    middleware: JwtMiddleware,
+    controller: AuthController,
+    action: 'refresh'
+}, {
     method: 'get',
     route: '/user/me',
     middleware: JwtMiddleware,

@@ -5,6 +5,7 @@ import { routes } from './routes'
 import { createRouter, createWebHistory } from 'vue-router'
 import { createPinia } from 'pinia'
 import axios from 'axios'
+import Notifications from '@kyvg/vue3-notification'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -20,4 +21,5 @@ const router = createRouter({
 app
     .use(router)
     .use(createPinia())
+    .use(Notifications)
     .mount('#app')

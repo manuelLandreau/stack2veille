@@ -17,3 +17,4 @@ https://vitejs.dev
 https://vueuse.org  
 https://pinia.vuejs.org  
 https://github.com/vitejs/awesome-vite#plugins  
+https://github.com/kyvg/vue3-notification  
